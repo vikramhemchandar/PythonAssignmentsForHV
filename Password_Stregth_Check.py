@@ -20,18 +20,18 @@ def check_password_strengt(pwd):
     has_digit = False
     has_special_character = False
 
-    #check if pwd has digits
+    #To check if pwd has digits
     for char in pwd:
         if char.isdigit():
             has_digit = True
 
 
-    #Check if pwd has special characters
+    #To check if pwd has special characters
     for char in specialCharacter:
         if char in pwd:
             has_special_character = True  
 
-    #to check the length of the password
+    #To check the length of the password
     if length < 8 or not has_upper_case or not has_lower_case or not has_digit or not has_special_character:
         return False
     else:

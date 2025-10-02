@@ -15,25 +15,23 @@ Alert! CPU usage exceeds threshold: 90%
 ... (continues until interrupted) 
 """
 
-#First install psutil - pip install psutil
-
 import psutil
 
 print("***Monitoring CPU Usage***")
 
 def main():
    while True:
-      #Checking the CPU Usage
+      #To check the CPU Usage
       cpu_usage = psutil.cpu_percent(interval=1)
 
       #Below print statement is written optional to check the current CPU Usage
       print(f'Current CPU Usage is :  {cpu_usage}%')
       
-      #Condition to check if CPU Usage is greater than 85% and lesser than 90%
+      #Condition written to check if CPU Usage is greater than 85% and lesser than 90%
       if(cpu_usage >=85 and cpu_usage <90):
          print("Alert! CPU usage exceeds threshold: 85%")
       
-      #Condition to check if CPU Usage is greater than 90%
+      #Condition writen to check if CPU Usage is greater than 90%
       elif(cpu_usage >=90):
          print("Alert! CPU usage exceeds threshold: 90%")
       

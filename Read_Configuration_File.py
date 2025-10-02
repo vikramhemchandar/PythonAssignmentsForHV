@@ -34,7 +34,7 @@ from flask import Flask, jsonify, request
 from pymongo import MongoClient
 import webbrowser
 
-#Read Configuration file and converting the data into Dictionary 
+#To Read the file and converting the data into a Dictionary  
 def read_file(file_path):
 
     #Try block to handle errors gracefully
@@ -43,7 +43,7 @@ def read_file(file_path):
         config = configparser.ConfigParser()
         config.read(file_path)
 
-        #Throw an exception if the configuration file is empty or invalid   
+        #This throws an exception if the configuration file is empty or invalid   
         if not config.sections():
             raise Exception("Configuration file is empty or invalid.")
         
@@ -53,7 +53,7 @@ def read_file(file_path):
             for key, value in config.items(section):
                 data[section][key] = value
                 
-    #except block to print the errors
+    #except blocks to print the errors
     except FileNotFoundError:
         print("File not found")
     except Exception as exception:
@@ -63,12 +63,14 @@ def read_file(file_path):
 
 #save the configuration data to a Mongo DB
 def save_to_database(data):
+
+    #Mongo DB Details
     client = MongoClient("mongodb+srv://vikram_DB:FsGnNq5GNa6idbot@vikramhemchandar.rtgw4pn.mongodb.net/")
     database = client["pythonfordevops"]
     collection = database["config_data"]
 
     try:
-        # Insert new document
+        # Insert new document on the given DB and Collection
         result = collection.insert_one(data)
         print(f"Data inserted with document ID: {result.inserted_id}")
 
@@ -77,17 +79,17 @@ def save_to_database(data):
 
 app = Flask("__name__")
 
-#Welcome page with a hyper link to Get the Config Data. This is optional
-# @app.route("/")
-# def default_page():
-#     print("This is the home page")
-#     return '''
-#         <h1>Welcome to Config Data Program</h1>
-#         <a href="/getData">Get Config Data</a>
-#         '''
+#This is optional. Welcome page with a hyper link to Get the Config Data.
+@app.route("/")
+def default_page():
+    print("This is the home page")
+    return '''
+        <h1>Welcome to Config Data Program</h1>
+        <a href="/getConfigData">Get Config Data</a>
+        '''
 
 #To fetch the data from Mongo DB and print it in JSON format on web browser. 
-@app.route("/getData", methods=["GET"])
+@app.route("/getConfigData", methods=["GET"])
 def get_config_data():
     client = MongoClient("mongodb+srv://vikram_DB:FsGnNq5GNa6idbot@vikramhemchandar.rtgw4pn.mongodb.net/")
     database = client["pythonfordevops"]
@@ -103,6 +105,7 @@ def get_config_data():
 
 if __name__ == "__main__":    
     data = read_file("Configuration.txt")
+
     #Printing the data in the desired format
     if data:
         print("Configuration File Parser Results:")

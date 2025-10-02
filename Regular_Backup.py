@@ -18,26 +18,22 @@ from datetime import datetime
 
 def backup_files(source_dir, dest_dir):
     
+    #Try block to handle errors gracefully
     try:
-        # Check if source directory exists
+        #to check if source directory exists
         if not os.path.exists(source_dir):
             print(f"Error: Source directory '{source_dir}' does not exist.")
             return
 
-        # Check if destination directory exists
+        #to check if destination directory exists
         if not os.path.exists(dest_dir):
             print(f"Error: Destination directory '{dest_dir}' does not exist.")
             return
 
-        # Iterate over files in source directory
         for file_name in os.listdir(source_dir):
             source_file = os.path.join(source_dir, file_name)
-
-            # Skip directories, copy only files
             if os.path.isfile(source_file):
                 dest_file = os.path.join(dest_dir, file_name)
-
-                # If file already exists, append timestamp
                 if os.path.exists(dest_file):
                     base, ext = os.path.splitext(file_name)
                     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -50,6 +46,7 @@ def backup_files(source_dir, dest_dir):
 
         print("Backup completed successfully!")
 
+    #except blocks to print the errors
     except Exception as e:
         print(f"Error during backup: {e}")
 
